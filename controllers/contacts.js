@@ -12,7 +12,9 @@ const getById = async (req, res, next) => {
     const { contactId } = req.params;
     const result = await contacts.getContactById(contactId);
     if (!result) {
-      return res.status(404).json({ message: "Not found" });
+      return res
+        .status(404)
+        .json({ message: "Not data found on id - " + contactId });
     }
     res.json(result);
   } catch (error) {}
@@ -30,7 +32,9 @@ const deleteRecord = async (req, res, next) => {
     const { contactId } = req.params;
     const result = await contacts.removeContact(contactId);
     if (!result) {
-      return res.status(404).json({ message: "Not found" });
+      return res
+        .status(404)
+        .json({ message: "Not data found on id - " + contactId });
     }
     res.json({ message: "contact deleted" });
   } catch (error) {}
@@ -41,7 +45,9 @@ const update = async (req, res, next) => {
     const { contactId } = req.params;
     const result = await contacts.updateContact(contactId, req.body);
     if (!result) {
-      return res.status(404).json({ message: "Not found" });
+      return res
+        .status(404)
+        .json({ message: "Not data found on id - " + contactId });
     }
     res.json(result);
   } catch (error) {}

@@ -8,17 +8,13 @@ router.get("/", ctrl.getAll);
 
 router.get("/:contactId", ctrl.getById);
 
-router.post("/", validate.validBody(schemas.addSchema), ctrl.add);
+router.post("/", validate.validBody(schemas.addSchema, false), ctrl.add);
 
 router.delete("/:contactId", ctrl.deleteRecord);
 
 router.put(
   "/:contactId",
-  validate.validEmptyBody(
-    schemas.addSchemaName,
-    schemas.addSchemaEmail,
-    schemas.addSchemaPhone
-  ),
+  validate.validBody(schemas.addSchema, true),
   ctrl.update
 );
 
