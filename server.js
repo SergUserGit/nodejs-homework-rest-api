@@ -1,10 +1,9 @@
 const app = require("./app");
 const moongoose = require("mongoose");
 
-//const DB_HOST =
-//  "mongodb+srv://Serhii:zm6pRFWChgpB6K.@cluster0.efcvmyh.mongodb.net/db-contacts";
+const DB_HOST = "";
 
-const { DB_HOST } = require("./config");
+//const { DB_HOST } = require("./config");
 
 moongoose.set("strictQuery", true);
 

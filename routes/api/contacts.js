@@ -1,62 +1,21 @@
-const contacts = require("../models/contacts");
+const express = require("express");
+const router = express.Router();
+const ctrl = require("../../controllers/contacts");
+const { validate } = require("../../middlewars");
+const schemas = require("../../schemas/contacts");
 
-const getAll = async (req, res) => {
-  try {
-    const result = await contacts.listContacts();
-    res.json(result);
-  } catch (error) {}
-};
+router.get("/", ctrl.getAll);
 
-const getById = async (req, res, next) => {
-  try {
-    const { contactId } = req.params;
-    const result = await contacts.getContactById(contactId);
-    if (!result) {
-      return res
-        .status(404)
-        .json({ message: "Not data found on id - " + contactId });
-    }
-    res.json(result);
-  } catch (error) {}
-};
+router.get("/:contactId", ctrl.getById);
 
-const add = async (req, res, next) => {
-  try {
-    const result = await contacts.addContact(req.body);
-    res.status(201).json(result);
-  } catch (error) {}
-};
+router.post("/", validate.validBody(schemas.addSchema, false), ctrl.add);
 
-const deleteRecord = async (req, res, next) => {
-  try {
-    const { contactId } = req.params;
-    const result = await contacts.removeContact(contactId);
-    if (!result) {
-      return res
-        .status(404)
-        .json({ message: "Not data found on id - " + contactId });
-    }
-    res.json({ message: "contact deleted" });
-  } catch (error) {}
-};
+router.delete("/:contactId", ctrl.deleteRecord);
 
-const update = async (req, res, next) => {
-  try {
-    const { contactId } = req.params;
-    const result = await contacts.updateContact(contactId, req.body);
-    if (!result) {
-      return res
-        .status(404)
-        .json({ message: "Not data found on id - " + contactId });
-    }
-    res.json(result);
-  } catch (error) {}
-};
+router.put(
+  "/:contactId",
+  validate.validBody(schemas.addSchema, true),
+  ctrl.update
+);
 
-module.exports = {
-  getAll,
-  getById,
-  add,
-  deleteRecord,
-  update,
-};
+module.exports = router;
