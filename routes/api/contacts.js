@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ctrl = require("../../controllers/contacts");
-const { validate, isValidId } = require("../../middlewars");
+const { validate, isValidId, validFavorite } = require("../../middlewars");
 const { shemas } = require("../../models/contact");
 
 router.get("/", ctrl.getAll);
@@ -17,6 +17,13 @@ router.put(
   isValidId,
   validate.validBody(shemas.addSchema, true),
   ctrl.update
+);
+
+router.patch(
+  "/:contactId/favorite",
+  isValidId,
+  validate.validFavorite(shemas.updateFavoriteSchemas),
+  ctrl.updateStatusContact
 );
 
 module.exports = router;

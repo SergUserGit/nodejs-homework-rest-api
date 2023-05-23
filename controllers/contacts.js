@@ -55,10 +55,26 @@ const update = async (req, res, next) => {
   } catch (error) {}
 };
 
+const updateStatusContact = async (req, res, next) => {
+  try {
+    const { contactId } = req.params;
+    const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+      new: true,
+    });
+    if (!result) {
+      return res
+        .status(404)
+        .json({ message: "Not data found on id - " + contactId });
+    }
+    res.json(result);
+  } catch (error) {}
+};
+
 module.exports = {
   getAll,
   getById,
   add,
   deleteRecord,
   update,
+  updateStatusContact,
 };
