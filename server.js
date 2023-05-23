@@ -1,9 +1,6 @@
 const app = require("./app");
 const moongoose = require("mongoose");
-
-const DB_HOST = "";
-
-//const { DB_HOST } = require("./config");
+const { DB_HOST } = process.env;
 
 moongoose.set("strictQuery", true);
 
@@ -17,7 +14,3 @@ moongoose
     console.log(error.message);
     process.exit(1);
   });
-
-//app.listen(3000, () => {
-//  console.log("Server running. Use our API on port: 3000");
-//});
