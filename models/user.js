@@ -23,13 +23,13 @@ const userShema = new Schema(
 );
 
 const registerShema = Joi.object({
-  email: Joi.string.required(),
-  password: Joi.string.required(),
+  email: Joi.string().required(),
+  password: Joi.string().required(),
 });
 
 const loginShema = Joi.object({
-  email: Joi.string.required(),
-  password: Joi.string.required(),
+  email: Joi.string().required(),
+  password: Joi.string().required(),
 });
 
 const Shemas = {
