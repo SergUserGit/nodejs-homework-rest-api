@@ -2,7 +2,8 @@ const { Contact } = require("../models/contact");
 
 const getAll = async (req, res) => {
   try {
-    const result = await Contact.find();
+    const { _id: owner } = req.user;
+    const result = await Contact.find({ owner });
     res.json(result);
   } catch (error) {}
 };
@@ -22,7 +23,8 @@ const getById = async (req, res, next) => {
 
 const add = async (req, res, next) => {
   try {
-    const result = await Contact.create(req.body);
+    const { _id: owner } = req.user;
+    const result = await Contact.create({ ...req.body, owner });
     res.status(201).json(result);
   } catch (error) {}
 };
