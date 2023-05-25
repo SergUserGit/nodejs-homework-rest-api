@@ -1,8 +1,8 @@
-const contacts = require("../models/contacts");
+const { Contact } = require("../models/contact");
 
 const getAll = async (req, res) => {
   try {
-    const result = await contacts.listContacts();
+    const result = await Contact.find();
     res.json(result);
   } catch (error) {}
 };
@@ -10,7 +10,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const result = await contacts.getContactById(contactId);
+    const result = await Contact.findById(contactId);
     if (!result) {
       return res
         .status(404)
@@ -22,7 +22,7 @@ const getById = async (req, res, next) => {
 
 const add = async (req, res, next) => {
   try {
-    const result = await contacts.addContact(req.body);
+    const result = await Contact.create(req.body);
     res.status(201).json(result);
   } catch (error) {}
 };
@@ -30,7 +30,7 @@ const add = async (req, res, next) => {
 const deleteRecord = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const result = await contacts.removeContact(contactId);
+    const result = await Contact.findByIdAndRemove(contactId);
     if (!result) {
       return res
         .status(404)
@@ -43,7 +43,24 @@ const deleteRecord = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const result = await contacts.updateContact(contactId, req.body);
+    const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+      new: true,
+    });
+    if (!result) {
+      return res
+        .status(404)
+        .json({ message: "Not data found on id - " + contactId });
+    }
+    res.json(result);
+  } catch (error) {}
+};
+
+const updateStatusContact = async (req, res, next) => {
+  try {
+    const { contactId } = req.params;
+    const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+      new: true,
+    });
     if (!result) {
       return res
         .status(404)
@@ -59,4 +76,5 @@ module.exports = {
   add,
   deleteRecord,
   update,
+  updateStatusContact,
 };

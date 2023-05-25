@@ -20,4 +20,19 @@ const validBody = (schema, isPutQuery) => {
   return func;
 };
 
-module.exports = { validBody };
+const validFavorite = (schema) => {
+  const func = (req, res, next) => {
+    const { error } = schema.validate(req.body);
+    if (error) {
+      next(
+        res.status(400).json({
+          message: "missing field favorite",
+        })
+      );
+    }
+    next();
+  };
+  return func;
+};
+
+module.exports = { validBody, validFavorite };
