@@ -10,7 +10,8 @@ const autentificate = async (req, res, next) => {
   const [bearer, token] = authorization.split(" ");
 
   if (bearer !== "Bearer") {
-    next(res.status(401).json({ message: `Not authorized by token` }));
+    next(res.status(401).json({ message: `Not authorized` }));
+    return;
   }
 
   try {
@@ -20,7 +21,7 @@ const autentificate = async (req, res, next) => {
     if (!user || !user.token || user.token !== token) {
       next(
         res.status(401).json({
-          message: `User not found by id - ${id} or not found by token - ${token}`,
+          message: `Not authorized`,
         })
       );
     }

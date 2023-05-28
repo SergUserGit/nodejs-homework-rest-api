@@ -34,12 +34,12 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: `Email ${email} is wrong` });
+      return res.status(401).json({ message: `Email or password is wrong` });
     }
 
     const passwordCompare = await bcryptjs.compare(password, user.password);
     if (!passwordCompare) {
-      return res.status(401).json({ message: `Password ${password} is wrong` });
+      return res.status(401).json({ message: `Email or password is wrong` });
     }
 
     const payload = {

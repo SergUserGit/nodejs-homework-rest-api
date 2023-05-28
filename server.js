@@ -1,5 +1,6 @@
 const app = require("./app");
 const moongoose = require("mongoose");
+
 const { DB_HOST } = process.env;
 
 moongoose.set("strictQuery", true);
