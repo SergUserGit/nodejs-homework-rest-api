@@ -13,6 +13,12 @@ router.post(
 
 router.get("/verify/:verificationToken", ctrl.verifyEmail);
 
+router.post(
+  "/verify",
+  validate.validBody(Shemas.emailShema),
+  ctrl.resendVerifyEmail
+);
+
 router.post("/login", validate.validBody(Shemas.loginShema), ctrl.login);
 
 router.post("/logout", autentificate, ctrl.logout);

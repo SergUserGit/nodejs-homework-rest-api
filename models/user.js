@@ -36,6 +36,10 @@ const registerShema = Joi.object({
   password: Joi.string().required(),
 });
 
+const emailShema = Joi.object({
+  email: Joi.string().required(),
+});
+
 const loginShema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().required(),
@@ -44,6 +48,7 @@ const loginShema = Joi.object({
 const Shemas = {
   registerShema,
   loginShema,
+  emailShema,
 };
 
 const User = model("user", userShema);
