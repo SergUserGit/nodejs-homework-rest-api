@@ -11,6 +11,8 @@ router.post(
   ctrl.register
 );
 
+router.get("/verify/:verificationToken", ctrl.verifyEmail);
+
 router.post("/login", validate.validBody(Shemas.loginShema), ctrl.login);
 
 router.post("/logout", autentificate, ctrl.logout);
