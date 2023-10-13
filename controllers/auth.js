@@ -11,6 +11,8 @@ dotenv.config();
 
 const { User } = require("../models/user");
 
+const { sendEmail } = require("../helpers");
+
 const { SECRET_KEY } = process.env;
 
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
@@ -42,7 +44,7 @@ const register = async (req, res) => {
       html: `<a target="_blank" href="http://localhost:3000/api/auth/verify/${verificationToken}">Click verify email</a>`,
     };
 
-    //await sendEmail(verifyEmailSend);
+    await sendEmail(verifyEmailSend);
 
     res.status(201).json({
       user: {
@@ -87,7 +89,7 @@ const resendVerifyEmail = async (req, res) => {
     html: `<a target="_blank" href="http://localhost:3000/api/auth/verify/${user.verificationToken}">Click verify email</a>`,
   };
 
-  //await sendEmail(verifyEmailSend);
+  await sendEmail(verifyEmailSend);
 
   res.json({
     message: `Verification email sent`,
